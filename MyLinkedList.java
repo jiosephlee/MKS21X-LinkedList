@@ -27,7 +27,9 @@ public class MyLinkedList{
       return data;
     }
     public Integer setData(Integer i){
+      Integer output = getData();
       data = i;
+      return output;
     }
     public String toString(){
       String output = "" + data;
@@ -61,6 +63,12 @@ public class MyLinkedList{
     return size;
   }
   public boolean add(int value){
+    if (size() == 0){
+      start = new Node(value, null, null);
+      end = start;
+      size = 1;
+      return true;
+    }
     Node oldEnd = end;
     end = new Node(value, null , oldEnd);
     end.prev().setNext(end);
@@ -68,13 +76,13 @@ public class MyLinkedList{
     return true;
   }
   public String toString(){
-    String output = "";
+    String output = "{";
     Node x = this.start;
     for (int s = 0; s < size() ; s++){
-      output += x.getData();
+      output += x.getData() + ", ";
       x = x.next();
     }
-    return output;
+    return output.substring(0,output.length()-2) + "}";
   }
   public Integer get(int index){
     if (index == 0){
