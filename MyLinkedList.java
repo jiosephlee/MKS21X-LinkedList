@@ -38,6 +38,22 @@ public class MyLinkedList{
   private int size;
   private Node start,end;
 
+  public static void main(String[] args) {
+    MyLinkedList test = new MyLinkedList();
+    test.add(2);
+    test.add(5);
+    test.add(7);
+    System.out.println("add(2) and add(5) and add(7) performed...");
+    System.out.println("Size: " + test.size());
+    System.out.println("test: " + test);
+    System.out.println("get(0): " + test.get(0));
+    System.out.println("set(1,11): " + test.set(1,11));
+    System.out.println("get(1): " + test.get(1));
+    System.out.println("contains(11): " + test.contains(11));
+    System.out.println("indexOf(7): " + test.indexOf(7));
+
+  }
+
   public MyLinkedList(){
     size = 0;
   }
@@ -54,7 +70,7 @@ public class MyLinkedList{
   public String toString(){
     String output = "";
     Node x = this.start;
-    for (int s = 0; s < size ; s++){
+    for (int s = 0; s < size() ; s++){
       output += x.getData();
       x = x.next();
     }
@@ -74,18 +90,38 @@ public class MyLinkedList{
     return output.getData();
   }
   public Integer set(int index,Integer value){
-    int output = 
     Node target = start;
-    for (int x  = 1; x <= index; x++){
-      output = target.next();
+    int output = target.getData();
+    for (int x  = 0; x < index; x++){
+      output = target.getData();
+      target = target.next();
     }
-
+    target.setData(value);
+    return output;
   }
 
-  boolean contains(Integer value){}
-  int indexOf(Integer value){}
+  public boolean contains(Integer value){
+    Node target = start;
+    for (int x  = 0; x < size(); x++){
+      if (target.getData() == value){
+        return true;
+      }
+      target = target.next();
+    }
+    return false;
+  }
+  public int indexOf(Integer value){
+    Node target = start;
+    for (int x  = 0; x < size(); x++){
+      if (target.getData() == value){
+        return size;
+      }
+      target = target.next();
+    }
+    return -1;
+  }
 
-  void add(int index,Integer value){}
-  Integer remove(int index){}
-  boolean remove(Integer value){}
+  //void add(int index,Integer value){}
+  //Integer remove(int index){}
+  //boolean remove(Integer value){}
 }
