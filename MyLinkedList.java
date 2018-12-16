@@ -166,14 +166,14 @@ public class MyLinkedList{
     if (index == 0){
       getNthNode(index+1).setPrev(null);
       start = getNthNode(index+1);
-      return output;
     }else if (index == size()-1){
       getNthNode(index - 1).setNext(null);
       end = getNthNode(index - 1);
-      return output;
     }else{
-      output = get
+      getNthNode(index - 1).setNext(getNthNode(index + 1));
+      getNthNode(index + 1).setPrev(getNthNode(index - 1));
     }
+    return output;
   }
   //boolean remove(Integer value){}
 }
