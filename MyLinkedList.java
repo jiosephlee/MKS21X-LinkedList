@@ -149,16 +149,31 @@ public class MyLinkedList{
       add(value);
       return;
     }
+    Node target;
     if(index == 0){
-      Node target = new Node(value, getNthNode(index+1), null);
+      target = new Node(value, getNthNode(index+1), null);
       start = target;
     } else{
-    Node target = new Node(value, getNthNode(index+1), getNthNode(index-1));
+    target = new Node(value, getNthNode(index+1), getNthNode(index-1));
     getNthNode(index-1).setNext(target);
     }
     getNthNode(index+1).setPrev(target);
     size++;
   }
-  //Integer remove(int index){}
+
+  public Integer remove(int index){
+    int output = getNthNode(index).getData();
+    if (index == 0){
+      getNthNode(index+1).setPrev(null);
+      start = getNthNode(index+1);
+      return output;
+    }else if (index == size()-1){
+      getNthNode(index - 1).setNext(null);
+      end = getNthNode(index - 1);
+      return output;
+    }else{
+      output = get
+    }
+  }
   //boolean remove(Integer value){}
 }
