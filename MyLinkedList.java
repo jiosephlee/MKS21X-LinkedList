@@ -97,6 +97,21 @@ public class MyLinkedList{
     }
     return output.getData();
   }
+
+  private Node getNthNode(int index){
+    if (index == 0){
+      return start;
+    }
+    if (index == size-1){
+      return end;
+    }
+    Node output = start;
+    for (int x  = 1; x <= index; x++){
+      output = output.next();
+    }
+    return output;
+  }
+
   public Integer set(int index,Integer value){
     Node target = start;
     int output = target.getData();
@@ -129,7 +144,21 @@ public class MyLinkedList{
     return -1;
   }
 
-  //void add(int index,Integer value){}
+  public void add(int index,Integer value){
+    if(index == size() - 1){
+      add(value);
+      return;
+    }
+    if(index == 0){
+      Node target = new Node(value, getNthNode(index+1), null);
+      start = target;
+    } else{
+    Node target = new Node(value, getNthNode(index+1), getNthNode(index-1));
+    getNthNode(index-1).setNext(target);
+    }
+    getNthNode(index+1).setPrev(target);
+    size++;
+  }
   //Integer remove(int index){}
   //boolean remove(Integer value){}
 }
