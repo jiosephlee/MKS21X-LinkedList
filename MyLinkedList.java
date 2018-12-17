@@ -36,6 +36,9 @@ public class MyLinkedList{
       String output = "" + data;
       return output;
     }
+    public boolean hasNext(){
+      return next() != null;
+    }
   }
 
   private int size;
@@ -54,6 +57,11 @@ public class MyLinkedList{
     System.out.println("get(1): " + test.get(1));
     System.out.println("contains(11): " + test.contains(11));
     System.out.println("indexOf(7): " + test.indexOf(7));
+    test.add(1,123);
+    System.out.println("add(1,123)...");
+    System.out.println("removed: " + test.remove(3));
+    System.out.println("remove(3)");
+    System.out.println("test: " + test);
 
   }
 
@@ -76,30 +84,29 @@ public class MyLinkedList{
     size++;
     return true;
   }
+
   public String toString(){
-    String output = "{";
-    Node x = this.start;
-    for (int s = 0; s < size() ; s++){
-      output += x.getData() + ", ";
-      x = x.next();
+    if (size() == 0){
+      return "[]";
     }
-    return output.substring(0,output.length()-2) + "}";
+    String output = "[";
+    Node current = start;
+    while (current != null){
+      output += current.getData() + ", ";
+      if(current.hasNext()){
+        current = current.next();
+      } else{
+        return output.substring(0,output.length()-2) + "]";
+      }
+    }
+    return output + "]";
   }
+
   public Integer get(int index){
     if (index < 0 || index >= size){
       throw new IndexOutOfBoundsException();
     }
-    if (index == 0){
-      return start.getData();
-    }
-    if (index == size-1){
-      return end.getData();
-    }
-    Node output = start;
-    for (int x  = 1; x <= index; x++){
-      output = output.next();
-    }
-    return output.getData();
+    return getNthNode(index).getData();
   }
 
   private Node getNthNode(int index){
@@ -109,7 +116,7 @@ public class MyLinkedList{
     if (index == 0){
       return start;
     }
-    if (index == size-1){
+    if (index == size()-1){
       return end;
     }
     Node output = start;
@@ -120,7 +127,7 @@ public class MyLinkedList{
   }
 
   public Integer set(int index,Integer value){
-    if (index < 0 || index >= size){
+    if (index < 0 || index >= size()){
       throw new IndexOutOfBoundsException();
     }
     Node target = start;
@@ -155,7 +162,7 @@ public class MyLinkedList{
   }
 
   public void add(int index,Integer value){
-    if (index < 0 || index >= size){
+    if (index < 0 || index >= size()){
       throw new IndexOutOfBoundsException();
     }
     if(index == size() - 1){
@@ -164,25 +171,26 @@ public class MyLinkedList{
     }
     Node target;
     if(index == 0){
-      target = new Node(value, getNthNode(index+1), null);
+      target = new Node(value, getNthNode(index), null);
       start = target;
-    } else{
-    target = new Node(value, getNthNode(index+1), getNthNode(index-1));
+    }else{
+    target = new Node(value, getNthNode(index), getNthNode(index-1));
     getNthNode(index-1).setNext(target);
     }
-    getNthNode(index+1).setPrev(target);
+    getNthNode(index).setPrev(target);
     size++;
   }
 
   public Integer remove(int index){
-    if (index < 0 || index >= size){
+    if (index < 0 || index >= size()){
       throw new IndexOutOfBoundsException();
     }
     int output = getNthNode(index).getData();
+    size = size - 1;
     if (index == 0){
       getNthNode(index+1).setPrev(null);
       start = getNthNode(index+1);
-    }else if (index == size()-1){
+    } else if (index == size()){
       getNthNode(index - 1).setNext(null);
       end = getNthNode(index - 1);
     }else{
@@ -192,17 +200,10 @@ public class MyLinkedList{
     return output;
   }
   public boolean remove(Integer value){
-    Node output = start;
-    for (int x  = 0; x <= size() ; x++){
-      output = output.next();
-      if (output.getData() == value){
-        remove(x);
-        return true;
-      }
-      if (x < size()){
-        output = output.next();
-      }
-    }
-    return false;
-  }
+   if(!contains(value)){
+     return false;
+   }
+   remove(indexOf(value));
+   return true;
+ }
 }
