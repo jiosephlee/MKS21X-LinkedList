@@ -59,8 +59,8 @@ public class MyLinkedList{
     System.out.println("indexOf(7): " + test.indexOf(7));
     test.add(1,123);
     System.out.println("add(1,123)...");
-    System.out.println("removed: " + test.remove(3));
-    System.out.println("remove(3)");
+    System.out.println("removed: " + test.remove(new Integer(7)));
+    System.out.println("remove(new Integer(7))");
     System.out.println("test: " + test);
 
   }
@@ -143,7 +143,7 @@ public class MyLinkedList{
   public boolean contains(Integer value){
     Node target = start;
     for (int x  = 0; x < size(); x++){
-      if (target.getData() == value){
+      if (target.getData().equals(value)){
         return true;
       }
       target = target.next();
@@ -153,7 +153,7 @@ public class MyLinkedList{
   public int indexOf(Integer value){
     Node target = start;
     for (int x  = 0; x < size(); x++){
-      if (target.getData() == value){
+      if (target.getData().equals(value)){
         return x;
       }
       target = target.next();
@@ -162,10 +162,10 @@ public class MyLinkedList{
   }
 
   public void add(int index,Integer value){
-    if (index < 0 || index >= size()){
+    if (index < 0 || index > size()){
       throw new IndexOutOfBoundsException();
     }
-    if(index == size() - 1){
+    if(index == size()){
       add(value);
       return;
     }
@@ -185,20 +185,21 @@ public class MyLinkedList{
     if (index < 0 || index >= size()){
       throw new IndexOutOfBoundsException();
     }
-    int output = getNthNode(index).getData();
-    size = size - 1;
+    Node target = getNthNode(index);
     if (index == 0){
       getNthNode(index+1).setPrev(null);
       start = getNthNode(index+1);
-    } else if (index == size()){
+    } else if (index == size() - 1){
       getNthNode(index - 1).setNext(null);
       end = getNthNode(index - 1);
     }else{
       getNthNode(index - 1).setNext(getNthNode(index + 1));
       getNthNode(index + 1).setPrev(getNthNode(index - 1));
     }
-    return output;
+    size = size - 1;
+    return target.getData();
   }
+
   public boolean remove(Integer value){
    if(!contains(value)){
      return false;
