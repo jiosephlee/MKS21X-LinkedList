@@ -1,10 +1,11 @@
+import java.io.*;
+import java.util.*;
 public class MyLinkedList{
 
   private class Node{
 
     private int data;
     private Node next,prev;
-
     public Node(int data, Node next, Node prev){
       this.data = data;
       this.next = next;
@@ -85,6 +86,9 @@ public class MyLinkedList{
     return output.substring(0,output.length()-2) + "}";
   }
   public Integer get(int index){
+    if (index < 0 || index >= size){
+      throw new IndexOutOfBoundsException();
+    }
     if (index == 0){
       return start.getData();
     }
@@ -99,6 +103,9 @@ public class MyLinkedList{
   }
 
   private Node getNthNode(int index){
+    if (index < 0 || index >= size){
+      throw new IndexOutOfBoundsException();
+    }
     if (index == 0){
       return start;
     }
@@ -113,11 +120,14 @@ public class MyLinkedList{
   }
 
   public Integer set(int index,Integer value){
+    if (index < 0 || index >= size){
+      throw new IndexOutOfBoundsException();
+    }
     Node target = start;
     int output = target.getData();
     for (int x  = 0; x < index; x++){
-      output = target.getData();
       target = target.next();
+      output = target.getData();
     }
     target.setData(value);
     return output;
@@ -137,7 +147,7 @@ public class MyLinkedList{
     Node target = start;
     for (int x  = 0; x < size(); x++){
       if (target.getData() == value){
-        return size;
+        return x;
       }
       target = target.next();
     }
@@ -145,6 +155,9 @@ public class MyLinkedList{
   }
 
   public void add(int index,Integer value){
+    if (index < 0 || index >= size){
+      throw new IndexOutOfBoundsException();
+    }
     if(index == size() - 1){
       add(value);
       return;
@@ -162,6 +175,9 @@ public class MyLinkedList{
   }
 
   public Integer remove(int index){
+    if (index < 0 || index >= size){
+      throw new IndexOutOfBoundsException();
+    }
     int output = getNthNode(index).getData();
     if (index == 0){
       getNthNode(index+1).setPrev(null);
@@ -175,5 +191,18 @@ public class MyLinkedList{
     }
     return output;
   }
-  //boolean remove(Integer value){}
+  public boolean remove(Integer value){
+    Node output = start;
+    for (int x  = 0; x <= size() ; x++){
+      output = output.next();
+      if (output.getData() == value){
+        remove(x);
+        return true;
+      }
+      if (x < size()){
+        output = output.next();
+      }
+    }
+    return false;
+  }
 }
