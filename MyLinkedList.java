@@ -62,7 +62,11 @@ public class MyLinkedList{
     System.out.println("removed: " + test.remove(new Integer(7)));
     System.out.println("remove(new Integer(7))");
     System.out.println("test: " + test);
-
+    MyLinkedList test2 = new MyLinkedList();
+    test2.add(0,123);
+    System.out.println("test2: " + test2);
+    test2.extend(test);
+    System.out.println("test2 and test1 combined: " + test2);
   }
 
   public MyLinkedList(){
@@ -207,4 +211,16 @@ public class MyLinkedList{
    remove(indexOf(value));
    return true;
  }
+
+   public void extend(MyLinkedList other){
+     if(other.start != null){
+       end.setNext(other.start);
+       other.start.setPrev(end);
+       end = other.end;
+       size = size() + other.size();
+       other.size = 0;
+       other.start = null;
+       other.end = null;
+     }
+    }
 }
